@@ -4,5 +4,6 @@ cypress.env.json
 cypress/downloads/
 cypress/screenshots/
 cypress/videos/
+lessons/
 
 node_modules/
