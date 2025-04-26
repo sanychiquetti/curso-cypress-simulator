@@ -1,16 +1,15 @@
 describe("Cypress Simulator", () => {
 
   beforeEach(() => {
+    cy.login()
     cy.visit("./src/index.html?skipCaptcha=true", {
       onBeforeLoad(win) {
         win.localStorage.setItem("cookieConsent", "accepted")
       }
     })
-    cy.contains("button", "Login").click()
   })
    it("shows error message when typing and running a valid command without parentheses", () => {
-    cy.get("#codeInput").type("cy.visit")
-    cy.contains("button", "Run").click()
+    cy.run('cy.visit')
 
     cy.get("#outputArea", { timeout: 6000 })
       .should("contain", "Error:")
@@ -60,9 +59,7 @@ describe("Cypress Simulator", () => {
   })
 
   it("clears the code output when logging off then logging in again", () => {
-    cy.get('textarea[placeholder="Write your Cypress code here..."]')
-     .type('cy.log("Hi there!")')
-    cy.contains('button', 'Run').click()
+    cy.run('cy.log("Hi there!")')
 
     cy.get('#outputArea', { timeout: 6000 })
       .should('contain', 'Success:')
@@ -91,8 +88,8 @@ describe("Cypress Simulator", () => {
 
 describe('Cypress Simulator - Cookies consent', () => {
   beforeEach(() => {
+    cy.login()
     cy.visit('./src/index.html?skipCaptcha=true')
-    cy.contains('button', 'Login').click()
 })
 
   it("decline cookies", () => {

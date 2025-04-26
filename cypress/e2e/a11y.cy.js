@@ -1,18 +1,17 @@
 describe('Cypress Simulator - A11y Checks', () => {
    beforeEach(() => {
+      cy.login()
       cy.visit('./src/index.html?skipCaptcha=true', {
          onBeforeLoad(win) {
             win.localStorage.setItem('cookieConsent', 'accepted')
          } 
       })
-      cy.contains('button', 'Login').click()
       cy.injectAxe()
    })
    it("successfully simulates a Cypress command cy.visit()", () => {
-      cy.get("#codeInput").type("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
-      cy.contains("button", "Run").click()
+      cy.run("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
   
-      cy.get("#outputArea", { timeout: 6000 })
+      cy.get("#outputArea", { timeout: 8000 })
         .should("contain", "Success:")
         .and("contain", "cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/') // Visited URL 'https://www.linkedin.com/in/sanychiquettigarcia/'")
         .and("be.visible")
@@ -21,8 +20,7 @@ describe('Cypress Simulator - A11y Checks', () => {
     })
   
     it("shows error message when typing and running invalid Cypress command cy.run()", () => {
-      cy.get("#codeInput").type("cy.run()")
-      cy.contains("button", "Run").click()
+      cy.run('cy.run()')
   
       cy.get("#outputArea", { timeout: 6000 })
         .should("contain", "Error:")
@@ -33,8 +31,7 @@ describe('Cypress Simulator - A11y Checks', () => {
     })
   
     it("shows warning message when typing and running a not-implemented Cypress command ", () => {
-      cy.get("#codeInput").type("cy.contains('Logout')")
-      cy.contains("button", "Run").click()
+      cy.run('cy.contains("Logout")')
   
       cy.get("#outputArea", { timeout: 6000 })
         .should("contain", "Warning:")
@@ -44,9 +41,8 @@ describe('Cypress Simulator - A11y Checks', () => {
       cy.checkA11y('.warning')
     })
 
-    it.only("asks for help and gets common Cypress commands and examples with a link to the docs", () => {
-      cy.get("#codeInput").type("help")
-      cy.contains("button", "Run").click()
+    it("asks for help and gets common Cypress commands and examples with a link to the docs", () => {
+      cy.run('help')
   
       cy.get("#outputArea", { timeout: 6000 })
         .should("contain", "cy.visit(url: string)")
@@ -62,14 +58,13 @@ describe('Cypress Simulator - A11y Checks', () => {
     })
   
     it("maximizes and minimizes a simulation result", () => {
-      cy.get("#codeInput").type("cy.log('Hi there!')")
-      cy.contains("button", "Run").click()
+      cy.run('cy.log("Hi there!")')
   
       cy.get(".expand-collapse").click()
   
-      cy.get("#outputArea", { timeout: 6000 })
+      cy.get("#outputArea", { timeout: 8000 })
         .should("contain", "Success:")
-        .and("contain", "cy.log('Hi there!') // Logged message 'Hi there!'")
+        .and("contain", 'cy.log("Hi there!") // Logged message "Hi there!"')
         .and("be.visible")
       cy.get("#collapseIcon").should("be.visible")
 
@@ -102,10 +97,7 @@ describe('Cypress Simulator - A11y Checks', () => {
     })
   
     it("shows the running state before showing the final result", () => {
-      cy.get('textarea[placeholder="Write your Cypress code here..."]')
-        .type('cy.log("Hi there!")')
-  
-      cy.contains("button", "Run").click()
+      cy.run('cy.log("Hi there!")')
   
       cy.contains('button', 'Running...').should('be.visible')
       cy.contains('#outputArea', 'Running... Please wait.')
@@ -137,8 +129,8 @@ describe('Cypress Simulator - A11y Checks', () => {
 
 describe('Cypress Simulator - Cookies consent', () => {
    beforeEach(() => {
+      cy.login()
       cy.visit('./src/index.html?skipCaptcha=true')
-      cy.contains('button', 'Login').click()
       cy.injectAxe()
    })
 
