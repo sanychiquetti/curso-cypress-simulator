@@ -8,17 +8,21 @@ describe('Cypress Simulator - A11y Checks', () => {
       })
       cy.injectAxe()
    })
-   it("successfully simulates a Cypress command cy.visit()", () => {
-      cy.run("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
-  
-      cy.get("#outputArea", { timeout: 8000 })
-        .should("contain", "Success:")
-        .and("contain", "cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/') // Visited URL 'https://www.linkedin.com/in/sanychiquettigarcia/'")
-        .and("be.visible")
 
-      cy.checkA11y('.success')
-    })
-  
+   Cypress._.times(100, () => {
+      it("successfully simulates a Cypress command cy.visit()", () => {
+         cy.run("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
+     
+         cy.get("#outputArea", { timeout: 8000 })
+           .should("contain", "Success:")
+           .and("contain", "cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/') // Visited URL 'https://www.linkedin.com/in/sanychiquettigarcia/'")
+           .and("be.visible")
+   
+         cy.checkA11y('.success')
+       })
+     
+   }) 
+
     it("shows error message when typing and running invalid Cypress command cy.run()", () => {
       cy.run('cy.run()')
   
