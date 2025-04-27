@@ -1,7 +1,7 @@
 describe('Cypress Simulator - A11y Checks', () => {
    beforeEach(() => {
       cy.login()
-      cy.visit('./src/index.html?skipCaptcha=true', {
+      cy.visit('./src/index.html?skipCaptcha=true&chancesOfError=0', {
          onBeforeLoad(win) {
             win.localStorage.setItem('cookieConsent', 'accepted')
          } 
@@ -9,20 +9,16 @@ describe('Cypress Simulator - A11y Checks', () => {
       cy.injectAxe()
    })
 
-   Cypress._.times(100, () => {
-      it("successfully simulates a Cypress command cy.visit()", () => {
-         cy.run("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
-     
-         cy.get("#outputArea", { timeout: 8000 })
-           .should("contain", "Success:")
-           .and("contain", "cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/') // Visited URL 'https://www.linkedin.com/in/sanychiquettigarcia/'")
-           .and("be.visible")
-   
-         cy.checkA11y('.success')
-       })
-     
-   }) 
+   it("successfully simulates a Cypress command cy.visit()", () => {
+      cy.run("cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/')")
+  
+      cy.get("#outputArea", { timeout: 8000 })
+        .should("contain", "Success:")
+        .and("contain", "cy.visit('https://www.linkedin.com/in/sanychiquettigarcia/') // Visited URL 'https://www.linkedin.com/in/sanychiquettigarcia/'")
+        .and("be.visible")
 
+      cy.checkA11y('.success')
+    })
     it("shows error message when typing and running invalid Cypress command cy.run()", () => {
       cy.run('cy.run()')
   
