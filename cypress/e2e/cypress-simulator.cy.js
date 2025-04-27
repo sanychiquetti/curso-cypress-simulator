@@ -106,3 +106,22 @@ describe('Cypress Simulator - Cookies consent', () => {
       .should('be.equal', 'declined')
   })
 })
+
+describe.only('Glitch in the Matrix', () => {
+  beforeEach(() => {
+    cy.login()
+    cy.visit('./src/index.html?skipCaptcha=true&chancesOfError=1', {
+      onBeforeLoad(win) {
+        win.localStorage.setItem("cookieConsent", "accepted")
+      }
+    })
+  })
+
+  it('erros out with a glith in the matrix', () => {
+    cy.run('cy.visit("https://example.com")')
+
+    cy.get('#outputArea', { timeout: 6000 })
+      .should('contain', "There's a glitch in the Matrix.")
+      .and('be.visible')
+  })
+})
