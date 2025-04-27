@@ -2,9 +2,9 @@
 
 👋 Seja bem-vindo(a)!
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai amar esse curso. ❤️
+É muito bom tê-lo(a) aqui. ❤️
 
-## O que você vai aprender?
+## O que eu aprendi nesse curso:
 
 - Como planejar quais testes devem ser implementados e em que orderm
 - Como garantir testes estáveis
@@ -18,10 +18,6 @@
 - Como configurar uma esteira de integração contínua onde os testes sejam executados em paralelo
 - Como configurar _test retries_
 - Como gerar artefatos para ajudar na depuração de falhas na integração contínua
-
-## Vamos começar?
-
-Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
 
 ___
 
